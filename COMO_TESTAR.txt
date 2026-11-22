@@ -1,0 +1,96 @@
+SAGA - Sistema de Agendamento e Gestão Assistencial
+PMR3304 Sistemas de Informação 2026
+Gabriel Crisci Saade, João Rodriguez Santoro e Kenzo Hideshima Arakawa
+
+Todos os dados do sistema são fictícios (gerados pelo próprio programa).
+
+
+1. INSTALAR (só na primeira vez, uns 10 minutos)
+------------------------------------------------
+a) Descompacte o zip numa pasta comum, por exemplo Documentos\SAGA.
+   Não rode de dentro do zip: extraia primeiro (botão direito > Extrair tudo).
+
+b) Instale o Python: https://www.python.org/downloads/
+   IMPORTANTE: na primeira tela do instalador marque
+   "Add python.exe to PATH" antes de clicar em Install Now.
+
+c) Instale o Node.js, versão LTS: https://nodejs.org
+   Pode aceitar todas as opções padrão.
+
+d) Precisa de internet na primeira execução (baixa as bibliotecas).
+
+
+2. ABRIR
+--------
+Dê dois cliques em iniciar.bat.
+
+- Na primeira vez ele instala tudo e demora alguns minutos.
+- Abrem duas janelas pretas ("SAGA - API" e "SAGA - Site"). Não feche
+  nenhuma das duas enquanto estiver usando o sistema.
+- O navegador abre em http://localhost:5173. Se aparecer erro, espere
+  alguns segundos e aperte F5.
+- Para encerrar, feche as duas janelas pretas.
+
+Se o Windows avisar "O Windows protegeu o computador", clique em
+"Mais informações" > "Executar assim mesmo". É só porque o .bat não é
+assinado.
+
+
+3. ENTRAR
+---------
+Na tela de entrada há três botões de demonstração que preenchem
+usuário e senha. Depois clique em Entrar.
+
+  Paciente     ana.ribeiro
+  Médica       helena.vasconcelos
+  Enfermeira   fernanda.rocha
+  Senha de todos: saga1234
+
+Para trocar de perfil, use o botão de sair no canto inferior do menu.
+
+
+4. O QUE TESTAR (uns 15 minutos)
+--------------------------------
+Como paciente (ana.ribeiro)
+  [ ] Meus agendamentos: confirmar presença num agendamento destacado.
+  [ ] Agendar consulta: escolher uma especialidade, buscar horários e
+      agendar. O resumo mostra a sala reservada e o médico escolhido.
+  [ ] Cancelar ou remarcar um agendamento.
+  [ ] Solicitações e resultados: pedidos aguardando aprovação e
+      posição na fila de exames.
+  [ ] Sair e criar uma conta nova em "Faça seu cadastro".
+
+Como médica (helena.vasconcelos)
+  [ ] Minha agenda: clicar em Atender num paciente do dia.
+  [ ] Registrar o atendimento (evolução, hipótese e conduta).
+  [ ] Solicitar um exame ou cirurgia para o paciente (ele nasce
+      aguardando a aprovação da enfermagem).
+  [ ] Abrir o prontuário e liberar um registro para o paciente.
+  [ ] Disponibilidade: publicar horários de consulta numa sala
+      (período, horário e dias da semana).
+
+Como enfermeira (fernanda.rocha)
+  [ ] Aprovar solicitações: aprovar um pedido e ver ele entrar na fila.
+  [ ] Fila de triagem: triar um paciente (o sistema sugere o risco).
+  [ ] Ocupação de recursos: Abrir e depois Encerrar o uso de uma sala.
+  [ ] Recursos da unidade: cadastrar um recurso novo.
+  [ ] Painel de Ocupação: mudar o filtro de datas, ver os totais e
+      encaixar o primeiro da fila numa janela ociosa.
+
+Celular: o sistema roda só neste computador (localhost), então não
+abre no celular. Para ver o layout de celular, estreite a janela do
+navegador: o menu vira uma gaveta.
+
+
+5. ALGO DEU ERRADO?
+-------------------
+- "Python 3.10 ou mais novo nao encontrado": instale o Python marcando
+  "Add python.exe to PATH" e rode o iniciar.bat de novo.
+- "Node.js nao encontrado": instale o Node LTS, feche e abra o .bat.
+- A agenda do dia está vazia ou os dados ficaram bagunçados: rode
+  reiniciar_dados.bat. Ele recria tudo com datas a partir de hoje.
+- Qualquer outra coisa: tire um print da janela preta que mostrou o
+  erro e mande no grupo.
+
+Anotem o que acharam estranho, confuso ou quebrado. Isso ajuda muito
+na entrega final.

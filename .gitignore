@@ -221,3 +221,13 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# SAGA: front-end, banco local e arquivos gerados
+node_modules/
+*.sqlite3
+staticfiles/
+media/
+.DS_Store
+.idea/
+.vscode/
+*.log

@@ -1,0 +1,1074 @@
+// Estilo do SAGA.
+//
+// Feito só com o que foi visto nas aulas de laboratório:
+// - Aula 2: CSS externo, seletores de tipo, classe e id, descendente e filho,
+//   pseudo-classes (:hover, :active, :focus), modelo de caixa, Flexbox, Grid
+//   (inclusive grid-template-areas), media queries, Google Fonts, Font Awesome
+//   e Sass (variáveis e aninhamento).
+// - Aula 6: className no JSX e estado do React (useState) para mostrar ou
+//   esconder partes da tela, como o menu no celular.
+//
+// Fontes (Google Fonts) e ícones (Font Awesome) são incluídos no <head> do
+// index.html, como na aula 2.
+
+// ------------------------------------------------------------------ variáveis
+// Paleta da identidade do SAGA (a mesma dos documentos e das apresentações).
+$escuro: #07262a;
+$escuro-2: #0f3a3e;
+$teal: #0b5d63;
+$teal-escuro: #08494e;
+$teal-claro: #e6f0ef;
+$fundo: #f4f7f6;
+$branco: #ffffff;
+$apoio: #9cbfbb;
+$linha: #d9e3e2;
+$linha-fraca: #e9efee;
+$acento: #b8691c;
+$acento-escuro: #9a5713;
+$acento-claro: #fbf1e4;
+$tinta: #1c2a2e;
+$cinza: #5b6b6e;
+$vermelho: #a63a28;
+$vermelho-claro: #fbecea;
+$verde: #2b7148;
+$verde-claro: #e6f3ea;
+$azul: #285a8a;
+$azul-claro: #e6eef7;
+
+$titulo: 'Playfair Display', Georgia, serif;
+$texto: 'Inter', 'Segoe UI', Arial, sans-serif;
+
+$raio: 10px;
+$raio-pequeno: 7px;
+
+// ------------------------------------------------------------------ base
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: $texto;
+  font-size: 16px;
+  line-height: 1.5;
+  color: $tinta;
+  background-color: $fundo;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  line-height: 1.2;
+  color: $escuro;
+}
+
+h1 {
+  font-family: $titulo;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+p {
+  margin: 0 0 0.75rem;
+}
+
+a {
+  color: $teal;
+
+  &:hover {
+    color: $teal-escuro;
+  }
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+// ------------------------------------------------------------------ botões
+// O mesmo visual vale para <button> e para links que levam a outra tela
+// (classe .botao), para não colocar um botão dentro de um link.
+button,
+.botao {
+  font-family: $texto;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.1rem;
+  border: 1px solid $teal;
+  border-radius: $raio-pequeno;
+  background-color: $teal;
+  color: $branco;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $teal-escuro;
+    border-color: $teal-escuro;
+    color: $branco;
+  }
+
+  &:active {
+    background-color: $escuro;
+  }
+
+  &:focus {
+    outline: 3px solid $acento;
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    background-color: $linha;
+    border-color: $linha;
+    color: $cinza;
+    cursor: not-allowed;
+  }
+
+  &.secundario {
+    background-color: $branco;
+    color: $teal;
+    border-color: $apoio;
+
+    &:hover {
+      background-color: $teal-claro;
+      border-color: $teal;
+    }
+  }
+
+  &.acento {
+    background-color: $acento;
+    border-color: $acento;
+
+    &:hover {
+      background-color: $acento-escuro;
+      border-color: $acento-escuro;
+    }
+  }
+
+  &.perigo {
+    background-color: $branco;
+    color: $vermelho;
+    border-color: #e2b6ad;
+
+    &:hover {
+      background-color: $vermelho-claro;
+    }
+  }
+
+  &.link {
+    background-color: transparent;
+    border-color: transparent;
+    padding: 0;
+    color: $teal;
+    font-weight: 500;
+    text-decoration: underline;
+  }
+
+  &.pequeno {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.75rem;
+  }
+
+  &.largo {
+    width: 100%;
+  }
+}
+
+// ------------------------------------------------------------------ estrutura
+// Grade da tela: menu lateral à esquerda e conteúdo à direita.
+.app {
+  display: grid;
+  // minmax(0, 1fr): a coluna do conteúdo não cresce além da tela por causa
+  // de uma tabela larga (a tabela rola dentro do cartão).
+  grid-template-columns: 260px minmax(0, 1fr);
+  grid-template-areas: 'lateral conteudo';
+  min-height: 100vh;
+}
+
+.topo {
+  display: none;
+}
+
+.lateral {
+  grid-area: lateral;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.5rem 1rem;
+  background-color: $escuro;
+  color: #dbe8e6;
+
+  nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  nav a {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.65rem 0.75rem;
+    border-radius: $raio-pequeno;
+    color: #cfe0de;
+    font-size: 0.95rem;
+    text-decoration: none;
+
+    &:hover {
+      background-color: $escuro-2;
+      color: $branco;
+    }
+
+    &:focus {
+      outline: 2px solid $acento;
+    }
+
+    &.ativo {
+      background-color: $teal;
+      color: $branco;
+      font-weight: 600;
+    }
+  }
+}
+
+.icone {
+  width: 1.25rem;
+  text-align: center;
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  strong {
+    display: block;
+    font-family: $titulo;
+    font-size: 1.35rem;
+    color: $branco;
+  }
+
+  small {
+    display: block;
+    font-size: 0.8rem;
+    color: $apoio;
+  }
+}
+
+.perfil {
+  margin: 0 0 0.5rem;
+  padding: 0 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: $apoio;
+}
+
+.quem {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.75rem;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid $escuro-2;
+
+  strong {
+    display: block;
+    font-size: 0.9rem;
+    color: $branco;
+  }
+
+  small {
+    display: block;
+    font-size: 0.8rem;
+    color: $apoio;
+  }
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: $escuro-2;
+  color: $branco;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+button.icone-botao {
+  background-color: transparent;
+  border-color: transparent;
+  color: $apoio;
+  padding: 0.5rem;
+
+  &:hover {
+    background-color: $escuro-2;
+    border-color: $escuro-2;
+    color: $branco;
+  }
+}
+
+.conteudo {
+  grid-area: conteudo;
+  width: 100%;
+  max-width: 1240px;
+  padding: 2.5rem 3rem 4rem;
+}
+
+// Cabeçalho de cada tela: título à esquerda, ação à direita.
+.titulo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+
+.subtitulo {
+  margin: 0.35rem 0 0;
+  color: $cinza;
+}
+
+// ------------------------------------------------------------------ blocos
+.cartao {
+  background-color: $branco;
+  border: 1px solid $linha;
+  border-radius: $raio;
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.grade {
+  display: grid;
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+
+  .cartao {
+    margin-bottom: 0;
+  }
+}
+
+.grade-2 {
+  grid-template-columns: 1fr 1fr;
+}
+
+.grade-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+// Duas colunas em que a da direita é um resumo mais estreito (PAC001).
+.grade-escolha {
+  grid-template-columns: 3fr 2fr;
+  align-items: start;
+}
+
+.linha {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.75rem;
+}
+
+.cabeca-cartao {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+
+  h2 {
+    margin-bottom: 0;
+  }
+}
+
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.espaco {
+  flex-grow: 1;
+}
+
+.mudo {
+  color: $cinza;
+}
+
+.pequeno {
+  font-size: 0.875rem;
+}
+
+.direita {
+  text-align: right;
+}
+
+// Números do período (Painel e Resumo): uma faixa só, dividida por linhas.
+.resumo {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background-color: $branco;
+  border: 1px solid $linha;
+  border-radius: $raio;
+  margin-bottom: 1.25rem;
+
+  div {
+    padding: 1rem 1.25rem;
+    border-right: 1px solid $linha-fraca;
+    border-bottom: 1px solid $linha-fraca;
+  }
+
+  span {
+    display: block;
+    font-size: 0.85rem;
+    color: $cinza;
+  }
+
+  strong {
+    display: block;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: $escuro;
+  }
+
+  .ocioso strong {
+    color: $acento;
+  }
+}
+
+// Lista de próximos agendamentos.
+.item {
+  display: grid;
+  grid-template-columns: 110px 1fr auto;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid $linha-fraca;
+}
+
+.item-quando {
+  strong {
+    display: block;
+    font-size: 1.15rem;
+    color: $escuro;
+  }
+
+  small {
+    color: $cinza;
+  }
+}
+
+.item-acoes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+// Consulta que já pode ser confirmada: fundo e borda no tom do acento.
+.item.destaque {
+  background-color: $acento-claro;
+  border: 1px solid #efd7b6;
+  border-radius: $raio-pequeno;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+// Atalhos acima do registro de atendimento (MED002).
+.atalhos {
+  margin-bottom: 1.25rem;
+}
+
+// Colunas de alturas diferentes, alinhadas pelo topo.
+.topo-alinhado {
+  align-items: start;
+}
+
+// Horários livres de PAC001 e PAC003.
+.dia-horarios {
+  margin-bottom: 1.25rem;
+
+  h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.horarios {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0.5rem;
+
+  button {
+    padding: 0.5rem;
+  }
+}
+
+.horarios-longos {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 1rem;
+}
+
+// Classificação de risco sugerida na triagem (ENF001).
+.risco-1 { color: $azul; }
+.risco-2 { color: $verde; }
+.risco-3 { color: #8a6a10; }
+.risco-4 { color: $acento; }
+.risco-5 { color: $vermelho; }
+
+// Prontuário: um bloco por atendimento.
+.linha-tempo {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.evento {
+  border: 1px solid $linha;
+  border-radius: $raio;
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    background-color: $teal-claro;
+    border-bottom: 1px solid $linha;
+    border-radius: $raio $raio 0 0;
+  }
+}
+
+.registro {
+  display: grid;
+  grid-template-columns: 150px 1fr auto;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid $linha-fraca;
+
+  p {
+    margin: 0;
+  }
+}
+
+.registro-tipo {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: $teal;
+}
+
+// ------------------------------------------------------------------ formulário
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #33454a;
+
+  input,
+  select,
+  textarea {
+    font-family: $texto;
+    font-size: 0.95rem;
+    font-weight: 400;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid #c4d3d2;
+    border-radius: $raio-pequeno;
+    background-color: $branco;
+    color: $tinta;
+    width: 100%;
+    min-width: 0;
+
+    &:hover {
+      border-color: $apoio;
+    }
+
+    &:focus {
+      outline: 2px solid $teal;
+      outline-offset: 0;
+      border-color: $teal;
+    }
+
+    &:disabled {
+      background-color: $fundo;
+      color: $cinza;
+    }
+  }
+
+  textarea {
+    min-height: 100px;
+  }
+
+  .erro {
+    font-weight: 400;
+    color: $vermelho;
+  }
+
+  .dica {
+    font-weight: 400;
+    color: $cinza;
+  }
+
+  &.campo-erro {
+    input,
+    select,
+    textarea {
+      border-color: $vermelho;
+    }
+  }
+}
+
+// Dias da semana de MED001: cada dia é uma etiqueta que se marca com um clique.
+.dias {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+
+  label {
+    display: flex;
+    align-items: center;
+    padding: 0.35rem 0.9rem;
+    border: 1px solid #c4d3d2;
+    border-radius: 999px;
+    font-weight: 500;
+    cursor: pointer;
+
+    &:hover {
+      border-color: $teal;
+    }
+
+    &.marcado {
+      background-color: $teal;
+      border-color: $teal;
+      color: $branco;
+    }
+  }
+
+  input {
+    display: none;
+  }
+}
+
+// ------------------------------------------------------------------ avisos e selos
+.aviso {
+  padding: 0.85rem 1rem;
+  margin-bottom: 1.25rem;
+  border: 1px solid;
+  border-radius: $raio-pequeno;
+  font-size: 0.95rem;
+}
+
+.aviso-info {
+  background-color: $teal-claro;
+  border-color: #cfe1df;
+  color: #22545a;
+}
+
+.aviso-erro {
+  background-color: $vermelho-claro;
+  border-color: #f0cfc8;
+  color: $vermelho;
+}
+
+.aviso-ok {
+  background-color: $verde-claro;
+  border-color: #cbe4d3;
+  color: $verde;
+}
+
+.aviso-atencao {
+  background-color: $acento-claro;
+  border-color: #efd7b6;
+  color: #85500f;
+}
+
+.selo {
+  display: inline-block;
+  padding: 0.15rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.selo-azul {
+  background-color: $azul-claro;
+  color: $azul;
+}
+
+.selo-verde {
+  background-color: $verde-claro;
+  color: $verde;
+}
+
+.selo-cinza {
+  background-color: #ebefef;
+  color: $cinza;
+}
+
+.selo-vermelho {
+  background-color: $vermelho-claro;
+  color: $vermelho;
+}
+
+.selo-laranja {
+  background-color: $acento-claro;
+  color: #85500f;
+}
+
+.vazio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 2rem 1rem;
+  text-align: center;
+  color: $cinza;
+
+  i {
+    font-size: 1.75rem;
+    color: $apoio;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.carregando {
+  padding: 1.5rem 0;
+  color: $cinza;
+}
+
+// ------------------------------------------------------------------ tabelas
+.tabela {
+  th {
+    padding: 0.6rem 0.75rem;
+    border-bottom: 2px solid $linha;
+    text-align: left;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: $cinza;
+  }
+
+  td {
+    padding: 0.65rem 0.75rem;
+    border-bottom: 1px solid $linha-fraca;
+  }
+
+  tbody tr:hover {
+    background-color: #f7faf9;
+  }
+
+  .direita {
+    text-align: right;
+  }
+
+  tfoot td {
+    border-bottom: 0;
+    font-weight: 600;
+  }
+
+  // Datas, horas e botões de ação não quebram em duas linhas.
+  .sem-quebra,
+  .direita {
+    white-space: nowrap;
+  }
+}
+
+// Tabela cruzada do Painel (recurso x dia), com totais na última linha e coluna.
+.cruzada {
+  th,
+  td {
+    text-align: right;
+  }
+
+  .recurso {
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .total {
+    font-weight: 600;
+    background-color: $teal-claro;
+  }
+
+  .sem-valor {
+    color: #a9b8b7;
+  }
+
+  tfoot td {
+    border-top: 2px solid $teal;
+    background-color: $teal-claro;
+  }
+}
+
+// Tabelas largas rolam de lado dentro do cartão em vez de estourar a tela.
+.rolagem {
+  overflow-x: auto;
+}
+
+// ------------------------------------------------------------------ entrada e cadastro
+.tela-entrada {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  grid-template-areas: 'arte formulario';
+  min-height: 100vh;
+}
+
+.entrada-arte {
+  grid-area: arte;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 3.5rem 4rem;
+  background-color: $escuro;
+  color: #dbe8e6;
+
+  h1 {
+    font-size: 3.2rem;
+    line-height: 1.1;
+    color: $branco;
+    margin-bottom: 1.25rem;
+  }
+
+  p {
+    max-width: 32rem;
+    font-size: 1.05rem;
+    color: $apoio;
+  }
+
+  small {
+    color: #85a8a4;
+  }
+}
+
+.atores {
+  list-style: none;
+  max-width: 32rem;
+  margin: 2.25rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  li {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  i {
+    width: 1.25rem;
+    margin-top: 0.2rem;
+    text-align: center;
+    color: #e0a35c;
+  }
+
+  strong {
+    display: block;
+    color: $branco;
+  }
+
+  span {
+    font-size: 0.95rem;
+    color: $apoio;
+  }
+}
+
+.entrada-form {
+  grid-area: formulario;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+
+  form {
+    width: 100%;
+    max-width: 380px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  &.cadastro form {
+    max-width: 560px;
+  }
+
+  h1 {
+    margin-bottom: 0.25rem;
+  }
+}
+
+.so-celular {
+  display: none;
+}
+
+.demo {
+  padding-top: 1rem;
+  border-top: 1px solid $linha;
+}
+
+.demo-botoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+// ------------------------------------------------------------------ telas menores
+// Como na aula 2: as media queries trocam colunas da grade e a direção do Flexbox.
+@media (max-width: 1100px) {
+  .conteudo {
+    padding: 2rem;
+  }
+
+  .grade-4,
+  .resumo {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  // O menu lateral vira uma barra no topo; o botão abre e fecha os links.
+  .app {
+    grid-template-columns: minmax(0, 1fr);
+    // Topo e menu ficam na altura do conteúdo; a sobra vai para a área do conteúdo.
+    grid-template-rows: auto auto 1fr;
+    grid-template-areas:
+      'topo'
+      'lateral'
+      'conteudo';
+  }
+
+  .topo {
+    grid-area: topo;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.65rem 1rem;
+    background-color: $escuro;
+
+    .marca strong {
+      font-size: 1.15rem;
+    }
+  }
+
+  .lateral {
+    display: none;
+    padding: 0.5rem 1rem 1.25rem;
+
+    .marca {
+      display: none;
+    }
+  }
+
+  .lateral.aberta {
+    display: flex;
+  }
+
+  .conteudo {
+    padding: 1.5rem 1rem 3rem;
+  }
+
+  h1 {
+    font-size: 1.65rem;
+  }
+
+  .grade-escolha {
+    grid-template-columns: 1fr;
+  }
+
+  .tela-entrada {
+    grid-template-columns: 1fr;
+    grid-template-areas: 'formulario';
+  }
+
+  .entrada-arte {
+    display: none;
+  }
+
+  .so-celular {
+    display: flex;
+    margin-bottom: 1.5rem;
+
+    strong {
+      color: $escuro;
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .grade-2 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  // Tabelas largas rolam de lado dentro do cartão.
+  .cartao {
+    padding: 1.1rem 1rem;
+    overflow-x: auto;
+  }
+
+  .resumo strong {
+    font-size: 1.35rem;
+  }
+
+  .item {
+    grid-template-columns: 96px minmax(0, 1fr);
+    gap: 0.5rem 0.75rem;
+    align-items: start;
+  }
+
+  .item-acoes {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    justify-content: flex-start;
+  }
+
+  .registro {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+
+  // Formulários em coluna; os controles do cabeçalho (dia anterior e
+  // próximo) continuam lado a lado.
+  .linha {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .horarios {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .horarios-longos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .titulo .linha {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .titulo {
+    align-items: flex-start;
+  }
+}

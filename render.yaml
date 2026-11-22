@@ -1,0 +1,36 @@
+# Publicação no Render (render.com), como nas aulas 3 e 4 de laboratório:
+# um serviço web (Django + React compilado, servido pelo Gunicorn) e um banco
+# PostgreSQL. Em Render: New > Blueprint > este repositório.
+databases:
+  - name: saga-db
+    plan: free
+    databaseName: saga
+    user: saga
+
+services:
+  - type: web
+    name: saga-pmr3304
+    runtime: python
+    plan: free
+    buildCommand: bash build.sh
+    startCommand: gunicorn saga.wsgi --bind 0.0.0.0:$PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      - key: NODE_VERSION
+        value: 22.12.0
+      - key: SAGA_DEBUG
+        value: "0"
+      - key: SAGA_SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: saga-db
+          property: connectionString
+      # Superusuário do /admin/ (aula 4). A senha é pedida no painel do Render.
+      - key: DJANGO_SUPERUSER_USERNAME
+        value: admin
+      - key: DJANGO_SUPERUSER_EMAIL
+        value: admin@saga.exemplo
+      - key: DJANGO_SUPERUSER_PASSWORD
+        sync: false
