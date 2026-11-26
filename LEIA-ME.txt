@@ -1,0 +1,46 @@
+SAGA - Sistema de Agendamento e Gestão Assistencial
+PMR3304 Sistemas de Informação, Poli-USP, 2026
+Grupo: Gabriel Crisci Saade, João Rodriguez Santoro, Kenzo Hideshima Arakawa
+
+COMO RODAR NO WINDOWS
+1. Instale o Python 3.12 ou mais novo e o Node.js 20 ou mais novo.
+2. Extraia este zip numa pasta (não rode de dentro do zip).
+3. Dê dois cliques em iniciar.bat. Na primeira vez ele instala tudo
+   (alguns minutos), cria o banco com dados sintéticos e abre o navegador
+   em http://localhost:5173.
+
+COMO RODAR EM OUTRO SISTEMA (ou à mão)
+   python -m venv venv
+   venv/bin/pip install -r requirements.txt      (Windows: venv\Scripts\pip)
+   venv/bin/python manage.py migrate
+   venv/bin/python manage.py seed
+   venv/bin/python manage.py runserver           (API em http://localhost:8000)
+   Em outro terminal:
+   cd frontend
+   npm install
+   npm run dev                                   (site em http://localhost:5173)
+
+CONTAS DE DEMONSTRAÇÃO (senha saga1234, dados sintéticos)
+   ana.ribeiro         paciente
+   helena.vasconcelos  médica
+   fernanda.rocha      enfermeira
+   Administração do Django em /admin/: crie com
+   venv/bin/python manage.py createsuperuser
+
+TESTES AUTOMÁTICOS
+   venv/bin/python manage.py test core           (31 testes)
+
+O QUE TEM NA PASTA
+   saga/            configuração do projeto Django
+   core/            models (DER v1.2, 16 tabelas), regras de negócio, admin, seed
+   accounts/        login, logout e cadastro (sessão do Django, grupos)
+   api/             API REST com Django REST Framework em /api/v1/
+   frontend/        site em React (Vite), estilo em Sass
+   documentos/      diagrama no DBDesigner (SAGA_DER_v1.2.xml) e a apresentação
+                    final (abrir apresentacao_final.html no navegador)
+   README.md        descrição completa, telas, rotas e relação com as aulas
+   COMO_TESTAR.txt  roteiro de teste das telas
+   PUBLICAR.md      publicação no Render com PostgreSQL
+
+As fontes (Google Fonts) e os ícones (Font Awesome) do site vêm pela
+internet; sem rede o site funciona com fontes parecidas e sem os ícones.
